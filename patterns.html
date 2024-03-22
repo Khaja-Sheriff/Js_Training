@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>JS Task 4</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+        <style>
+            
+
+        </style>
+
+        
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col" id="qusnum1"></div>
+                <div class="col" id="qusnum2"></div>
+                <div class="col" id="qusnum3"></div>
+                <div class="col" id="qusnum4"></div>
+                <div class="col" id="qusnum5"></div>
+            </div>              
+        </div>
+
+        <script>
+           function qus1(){
+                 let result = "";
+                 for(var a = 0; a <= 5; a++){
+                    for(var i = 0; i < a; i++){
+                        result += " * ";
+                    }
+                    result += "<br>";
+                 }
+                 document.getElementById("qusnum1").innerHTML = ("<pre>"+result+"</pre>");
+             }qus1();
+
+             function qus2(){
+                 let result = "";
+                 for(var a = 1; a <= 5; a++){
+                    for(var i = 1; i <= a; i++){ 
+                        result += " "+i+" ";
+                    }
+                    result += "<br>";
+                 }
+                 document.getElementById("qusnum2").innerHTML = ("<pre>"+result+"</pre>");
+             }qus2();
+
+            function qus3(){
+                 let result = "";
+                 for(var a = 0; a < 5; a++){
+                    for(var i = 0; i < 5; i++){
+                        result += "* ";
+                    }
+                    result += "<br>";
+                 }
+                 document.getElementById("qusnum3").innerHTML = ("<pre>"+result+"</pre>");
+             }qus3();
+
+             function qus4(){
+                 let result = "";
+                 for(var a = 1; a <= 5; a++){
+                    for(var b = 0; b < 5 - a; b++){
+                        result += " ";
+                    }
+                    for(var c = 0; c < a; c++){
+                        result += "*";
+                    }
+                    result += "<br>";
+                 }
+                 document.getElementById("qusnum4").innerHTML = ("<pre>"+result+"</pre>");
+             }qus4();
+
+             function qus5(){
+                 let result = "";
+                 for(var a = 1; a <= 9; a++){
+                    for(var b = 0; b < 9 - a; b++){
+                        result += " ";
+                    }
+                    for(var c = 0; c < a; c++){
+                        result += "* ";
+                    }
+                    result += "<br>";
+                 }
+                 document.getElementById("qusnum5").innerHTML = ("<pre>"+result+"</pre>");
+             }qus5();
+             
+         </script>
+
+    </body>
+</html>
