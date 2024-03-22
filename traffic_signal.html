@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Traffic Signal</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+        <style>
+            .container{ height: 100vh; }
+            .col{ height: 300px; }
+            .col-12{ height: 150px; }
+            .inner-wrap{ width: 80%; height: 100%; display: flex; flex-direction: column; justify-content: center; margin: auto; }
+            .inner-wrap > .row:nth-child(1) > .col:nth-child(even),
+            .inner-wrap > .row:nth-child(3) > .col:nth-child(even){ border: #555 solid 1px; border-top: 0; border-bottom: 0; }
+            .inner-wrap > .row:nth-child(2) > .col:nth-child(odd){ border: #555 solid 1px; border-left: 0; border-right: 0; }
+            .inner-wrap i{ font-size: 70px; color: #eee; }
+            .inner-wrap > .row:nth-child(1) > .col:nth-child(even) .col:nth-child(even),
+            .inner-wrap > .row:nth-child(3) > .col:nth-child(even) .col:nth-child(even){ border-left: #eee dashed 3px; }
+            .inner-wrap > .row:nth-child(2) > .col:nth-child(odd) .col-12:nth-child(odd){ border-bottom: #eee dashed 3px; }
+            .inner-wrap > .row:nth-child(2) > .col:nth-child(even){ position: relative; }
+            .inner-wrap > .row:nth-child(2) > .col:nth-child(even)::before{ content: ""; position: absolute; width: 300px; height: 300px; border: #eee dashed 3px; border-radius: 50%; }
+            .btns_group{ background-color: #fff; border: #555 solid 1px; border-radius: 50%; width: 200px; height: 200px; position: relative; overflow: hidden; }
+            .btns_group .btn{ color: #fff; width: 48.9%; display: inline-block; margin: 2% 0; font-size: 33px; }
+            .btns_group .btn:nth-child(1), .btns_group .btn:nth-child(4){ width: 100%; margin: 0; }
+
+            .ani_up{ animation: aniup 1s ease infinite;}
+            @keyframes aniup{
+                0%{ transform: translateY(15px);}
+                50%{ transform: translateY(0px);}
+                100%{ transform: translateY(15px);}
+            }
+            .ani_down{ animation: anidown 1s ease infinite;}
+            @keyframes anidown{
+                0%{ transform: translateY(0px);}
+                50%{ transform: translateY(15px);}
+                100%{ transform: translateY(0px);}
+            }
+            .ani_right{ animation: aniright 1s ease infinite;}
+            @keyframes aniright{
+                0%{ transform: translateX(0px);}
+                50%{ transform: translateX(15px);}
+                100%{ transform: translateX(0px);}
+            }
+            .ani_left{ animation: anileft 1s ease infinite;}
+            @keyframes anileft{
+                0%{ transform: translateX(15px);}
+                50%{ transform: translateX(0px);}
+                100%{ transform: translateX(15px);}
+            }
+
+            .text-danger{ opacity: 0.5; }
+
+        </style>
+
+        <script>
+
+            var btnNOn = false;
+            var btnWOn = false;
+            var btnEOn = false;
+            var btnSOn = false;
+
+            function trafficsignal(item){
+
+                let btnN = document.getElementById('btn_n');
+                let btnW = document.getElementById('btn_w');
+                let btnE = document.getElementById('btn_e');
+                let btnS = document.getElementById('btn_s');
+
+                let btnN_arr_up = document.getElementById('n_arr_up');
+                let btnN_arr_down = document.getElementById('n_arr_down');
+                let btnW_arr_left = document.getElementById('w_arr_left');
+                let btnW_arr_right = document.getElementById('w_arr_right');
+                let btnE_arr_left = document.getElementById('e_arr_left');
+                let btnE_arr_right = document.getElementById('e_arr_right');
+                let btnS_arr_up = document.getElementById('s_arr_up');
+                let btnS_arr_down = document.getElementById('s_arr_down');
+
+                var alloff = function(){
+                    btnN.className = 'btn btn-secondary';
+                    btnW.className = 'btn btn-secondary';
+                    btnE.className = 'btn btn-secondary';
+                    btnS.className = 'btn btn-secondary';
+                    
+                    btnN_arr_up.className = 'bi bi-arrow-up';
+                    btnN_arr_down.className = 'bi bi-arrow-down';
+                    btnW_arr_right.className = 'bi bi-arrow-right';
+                    btnW_arr_left.className = 'bi bi-arrow-left';
+                    btnE_arr_right.className = 'bi bi-arrow-right';
+                    btnE_arr_left.className = 'bi bi-arrow-left';
+                    btnS_arr_up.className = 'bi bi-arrow-up';
+                    btnS_arr_down.className = 'bi bi-arrow-down';
+                }
+
+                if(item == 'north'){
+                    if(!btnNOn){
+                        btnN.className = 'btn btn-success';
+                        btnW.className = 'btn btn-danger';
+                        btnE.className = 'btn btn-danger';
+                        btnS.className = 'btn btn-danger';
+
+                        btnN_arr_up.className = 'bi bi-arrow-up text-success ani_up';
+                        btnN_arr_down.className = 'bi bi-arrow-down text-success ani_down';
+                        btnW_arr_right.className = 'bi bi-arrow-right text-danger';
+                        btnW_arr_left.className = 'bi bi-arrow-left text-success ani_left';
+                        btnE_arr_right.className = 'bi bi-arrow-right text-success ani_right';
+                        btnE_arr_left.className = 'bi bi-arrow-left text-danger';
+                        btnS_arr_up.className = 'bi bi-arrow-up text-danger';
+                        btnS_arr_down.className = 'bi bi-arrow-down text-success ani_down';
+                    }
+                    else{
+                        alloff();
+                    }
+                   btnNOn = !btnNOn;
+                   btnWOn = false;
+                   btnEOn = false;
+                   btnSOn = false;
+                }
+                else if(item == 'west'){
+                    if(!btnWOn){
+                        btnN.className = 'btn btn-danger';
+                        btnW.className = 'btn btn-success';
+                        btnE.className = 'btn btn-danger';
+                        btnS.className = 'btn btn-danger';
+
+                        btnN_arr_up.className = 'bi bi-arrow-up text-success ani_up';
+                        btnN_arr_down.className = 'bi bi-arrow-down text-danger';
+                        btnW_arr_right.className = 'bi bi-arrow-right text-success ani_right';
+                        btnW_arr_left.className = 'bi bi-arrow-left text-success ani_left';
+                        btnE_arr_right.className = 'bi bi-arrow-right text-success ani_right';
+                        btnE_arr_left.className = 'bi bi-arrow-left text-danger';
+                        btnS_arr_up.className = 'bi bi-arrow-up text-danger';
+                        btnS_arr_down.className = 'bi bi-arrow-down text-success ani_down';
+                    }
+                    else{
+                        alloff();
+                    }
+                    btnWOn = !btnWOn;
+                    btnNOn = false;
+                    btnEOn = false;
+                    btnSOn = false;
+                }
+                else if(item == 'east'){
+                    if(!btnEOn){
+                        btnN.className = 'btn btn-danger';
+                        btnW.className = 'btn btn-danger';
+                        btnE.className = 'btn btn-success';
+                        btnS.className = 'btn btn-danger';
+
+                        btnN_arr_up.className = 'bi bi-arrow-up text-success ani_up';
+                        btnN_arr_down.className = 'bi bi-arrow-down text-danger';
+                        btnW_arr_right.className = 'bi bi-arrow-right text-danger';
+                        btnW_arr_left.className = 'bi bi-arrow-left text-success ani_left';
+                        btnE_arr_right.className = 'bi bi-arrow-right text-success ani_right';
+                        btnE_arr_left.className = 'bi bi-arrow-left text-success ani_left';
+                        btnS_arr_up.className = 'bi bi-arrow-up text-danger';
+                        btnS_arr_down.className = 'bi bi-arrow-down text-success ani_down';
+                    }
+                    else{
+                        alloff();
+                    }
+                    btnEOn = !btnEOn;
+                    btnNOn = false;
+                    btnWOn = false;
+                    btnSOn = false;
+                }
+                else if(item == 'south'){
+                    if(!btnSOn){
+                        btnN.className = 'btn btn-danger';
+                        btnW.className = 'btn btn-danger';
+                        btnE.className = 'btn btn-danger';
+                        btnS.className = 'btn btn-success';
+
+                        btnN_arr_up.className = 'bi bi-arrow-up text-success ani_up';
+                        btnN_arr_down.className = 'bi bi-arrow-down text-danger';
+                        btnW_arr_right.className = 'bi bi-arrow-right text-danger';
+                        btnW_arr_left.className = 'bi bi-arrow-left text-success ani_left';
+                        btnE_arr_right.className = 'bi bi-arrow-right text-success ani_right';
+                        btnE_arr_left.className = 'bi bi-arrow-left text-danger';
+                        btnS_arr_up.className = 'bi bi-arrow-up text-success ani_up';
+                        btnS_arr_down.className = 'bi bi-arrow-down text-success ani_down';
+                    }
+                    else{
+                        alloff();
+                    }
+                    btnSOn = !btnSOn;
+                    btnNOn = false;
+                    btnWOn = false;
+                    btnEOn = false;
+                }   
+
+            }            
+
+        </script>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="inner-wrap">
+                
+                <div class="row">
+                    <div class="col">
+                        
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col d-flex justify-content-center align-items-center"><i class="bi bi-arrow-up" id="n_arr_up"></i></div>
+                            <div class="col d-flex justify-content-center align-items-center"><i class="bi bi-arrow-down" id="n_arr_down"></i></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center align-items-center"><i class="bi bi-arrow-right" id="w_arr_right"></i></div>
+                            <div class="col-12 d-flex justify-content-center align-items-center"><i class="bi bi-arrow-left" id="w_arr_left"></i></div>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <div class="btns_group">
+                            <button class="btn btn-secondary" id="btn_n" onclick="trafficsignal('north')">N</button>
+                            <button class="btn btn-secondary" id="btn_w" onclick="trafficsignal('west')">W</button>
+                            <button class="btn btn-secondary" id="btn_e" onclick="trafficsignal('east')">E</button>
+                            <button class="btn btn-secondary" id="btn_s" onclick="trafficsignal('south')">S</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center align-items-center"><i class="bi bi-arrow-right" id="e_arr_right"></i></div>
+                            <div class="col-12 d-flex justify-content-center align-items-center"><i class="bi bi-arrow-left" id="e_arr_left"></i></div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col">
+                        
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col d-flex justify-content-center align-items-center"><i class="bi bi-arrow-up" id="s_arr_up"></i></div>
+                            <div class="col d-flex justify-content-center align-items-center"><i class="bi bi-arrow-down" id="s_arr_down"></i></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

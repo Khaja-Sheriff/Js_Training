@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Parking System</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+        <style>
+            .bays{ margin-top: 30px; }
+            .bays .bay{ border: #000 solid 1px; height: 150px; display: flex; align-items: center; justify-content: center; background-color: #ddd; }
+            .bays [id*='-']{ background-color: green; color: #fff; }
+        </style>
+    
+    </head>
+    <body>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-2"><label>Vehicle No:</label></div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="vehicleentry" />
+                        <span class="input-group-append">
+                            <button class="btn btn-info" onclick="vehicleEntry()">Entry</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-info" onclick="vehicleSearch()">Search</button>
+                </div>
+            </div>
+            <div class="bays">
+                <div class="row row-cols-5">
+                    <div class="col bay">1</div>
+                    <div class="col bay">2</div>
+                    <div class="col bay">3</div>
+                    <div class="col bay">4</div>
+                    <div class="col bay">5</div>
+                    <div class="col bay">6</div>
+                    <div class="col bay">7</div>
+                    <div class="col bay">8</div>
+                    <div class="col bay">9</div>
+                    <div class="col bay">10</div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-2"><label>Vehicle No:</label></div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="vehicleexit" />
+                        <span class="input-group-append">
+                            <button class="btn btn-info" onclick="vehicleExit()">Exit</button>
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <script>
+
+            let entriesArray = [],
+                entryfield = document.getElementById('vehicleentry');
+           
+            function vehicleEntry(){
+                let entries = entryfield.value;
+                if(entries != ""){
+                    entriesArray.push(entries);
+                    entryfield.value = '';
+                    for(var idx = 0; idx < entriesArray.length; idx++){
+                        document.getElementsByClassName('bay')[idx].id = "-"+entriesArray[idx];
+                    }
+                }
+                else{
+                    alert("Please enter the vehicle number");
+                }
+                console.log(entriesArray);
+            }
+
+            function vehicleSearch(){
+                let vehicleNum = entryfield.value;
+                if(entriesArray.length > 0){
+                    if(vehicleNum != ""){
+                        entryfield.value = '';
+                        for(var idx = 0; idx < entriesArray.length; idx++){
+                            if(vehicleNum === entriesArray[idx]){
+                                document.getElementById('-'+entriesArray[idx]).innerHTML = entriesArray[idx]
+                            }
+                        }
+                    }
+                    else{
+                        alert("Please enter the vehicle number");
+                    }
+                }
+                else{
+                    alert("There is no entry to search");
+                }
+            }
+
+            function vehicleExit(){
+                let vehicleExitNum = document.getElementById('vehicleexit').value;
+                if(entriesArray.length > 0){
+                    for(var idx = 0; idx < entriesArray.length; idx++){
+                        if(vehicleExitNum === entriesArray[idx]){
+                            document.getElementById('-'+entriesArray[idx]).removeAttribute("id");
+                            entriesArray.splice(idx,1);
+                            document.getElementsByClassName('bay')[idx].innerHTML = entriesArray.length;
+                        }
+                    }
+                    console.log(entriesArray);
+                }
+
+            }
+            
+
+        </script>
+
+        <!-- <script>
+
+            let arr = [10,20,30,40,50];
+          
+            function includes(arr,num){
+                let newarray = [num];
+                for(i = 0; i < arr.length; i++){
+                    if(arr[i] === num){
+                        return true
+                    }
+                    
+                }
+                return false
+                
+            }
+            console.log(includes(arr,60));
+
+            function indexof(arr,num){
+                let newarray = [num];
+                for(i = 0; i < arr.length; i++){
+                    if(arr[i] === num){
+                        return i
+                    }
+                    
+                }
+                return false
+                
+            }
+            console.log(indexof(arr,30));
+
+            function printallelm(){
+                for(i = 0; i < arr.length; i++){
+                    console.log(arr[i]); 
+                }                
+            }printallelm();
+            
+
+        </script> -->
+
+    </body>
+</html>
